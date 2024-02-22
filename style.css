@@ -1,7 +1,11 @@
+
+/* Global styles */
 body{
     background-color: black;
 }
 
+
+/* Timer container styles */
 .timer-body{
     position: absolute;
     background-color: slategray;
@@ -14,6 +18,8 @@ body{
     box-shadow: -10px 10px 10px slateblue;
 }
 
+
+/* Timer clock styles */
 .timer-clock{
     margin: auto;
     position: static;
@@ -29,6 +35,8 @@ body{
     font: 3em sans-serif;
 }
 
+
+/* Timer control styles */
 .timer-control{
     margin: auto;
     margin-top: 2vh;
@@ -39,6 +47,8 @@ body{
     justify-content: space-evenly;
 }
 
+
+/* Timer button styles */
 .timer-buttons{
     width: 25%;
     padding: 1.5%;
@@ -48,16 +58,18 @@ body{
     cursor: grabbing;
 }
 
+/* Timer button hover styles */
 .timer-buttons:hover{
     box-shadow: 0 0 15px rgb(111, 49, 49);
 }
 
-
+/* Alternating background color for timer buttons */
 .timer-buttons:nth-child(2n+1){
     background-color: rgb(245, 167, 42);
     opacity: 0.8;
 }
 
+/* Timer lap styles */
 .timer-lap{
     position: static;
     display: flex;
@@ -69,10 +81,12 @@ body{
     overflow-y: scroll;
 }
 
+/* Table styles */
 table{
     width: 100%;
 }
 
+/* Table header styles */
 th{
     top: 0;
     position: sticky;
@@ -80,13 +94,12 @@ th{
     z-index: 1;
 }
 
+/* Table row styles */
 tr{
     text-align: center;
 }
 
-::-webkit-scrollbar {
-    width: 5px;
-  }
+
 
 
 

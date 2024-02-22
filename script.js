@@ -1,26 +1,38 @@
-const time={
-    'hour' : 0,
-    'minute' : 0,
-    'second' : 0,
-    'millisecond' : 0
+// Define initial time object
+const time = {
+    'hour': 0,
+    'minute': 0,
+    'second': 0,
+    'millisecond': 0
 };
 
+// DOM elements
 const startBtn = document.querySelector('#start-timer');
 const recordBtn = document.querySelector('#record-lap');
 const resetBtn = document.querySelector('#reset-timer');
 const timerDis = document.querySelector('#timer-display');
 const lapTable = document.querySelector('#lap');
 
+// Timer variables
 let intervalId = null;
 let lapCount = 0;
 let prevLapTime = 0;
 
-resetTimer();
+// Reset timer function
+function resetTimer() {
+    clearInterval(intervalId);
+    startBtn.value = 'start';
+    startBtn.textContent = 'START';
+    startBtn.style.backgroundColor = 'rgb(22, 220, 22)';
+    recordBtn.disabled = true;
+    resetBtn.disabled = true;
+    // Reset time variables
+    time.hour = time.minute = time.second = time.millisecond = 0;
+    clearTable();
+    timerDis.textContent = '00:00:00:00';
+}
 
-startBtn.addEventListener('click', toggleTimer);
-resetBtn.addEventListener('click', resetTimer);
-recordBtn.addEventListener('click', recordLap);
-
+// Toggle timer function (start/pause)
 function toggleTimer() {
     if (startBtn.value === 'start') {
         startBtn.value = 'pause';
@@ -38,30 +50,33 @@ function toggleTimer() {
     }
 }
 
-function display() {
-    incrementTime();
-    timerDis.textContent = formatTime(hour, minute, second, millisecond);
-}
-
+// Increment time function
 function incrementTime() {
-    millisecond++;
-    if (millisecond === 100) {
-        millisecond = 0;
-        second++;
-        if (second === 60) {
-            second = 0;
-            minute++;
-            if (minute === 60) {
-                minute = 0;
-                hour++;
-                if (hour === 25) {
-                    hour = 0;
+    time.millisecond++;
+    if (time.millisecond === 100) {
+        time.millisecond = 0;
+        time.second++;
+        if (time.second === 60) {
+            time.second = 0;
+            time.minute++;
+            if (time.minute === 60) {
+                time.minute = 0;
+                time.hour++;
+                if (time.hour === 25) {
+                    time.hour = 0;
                 }
             }
         }
     }
 }
 
+// Display function to update timer display
+function display() {
+    incrementTime();
+    timerDis.textContent = formatTime(time.hour, time.minute, time.second, time.millisecond);
+}
+
+// Format time function to format time components
 function formatTime(hour, minute, second, millisecond) {
     let hr = hour < 10 ? '0' + hour : hour;
     let min = minute < 10 ? '0' + minute : minute;
@@ -70,20 +85,9 @@ function formatTime(hour, minute, second, millisecond) {
     return `${hr} : ${min} : ${sec} : ${msec}`;
 }
 
-function resetTimer() {
-    clearInterval(intervalId);
-    startBtn.value = 'start';
-    startBtn.textContent = 'START';
-    startBtn.style.backgroundColor = 'rgb(22, 220, 22)';
-    recordBtn.disabled = true;
-    resetBtn.disabled = true;
-    hour = minute = second = millisecond = 0;
-    clearTable();
-    timerDis.textContent = '00:00:00:00';
-}
-
+// Record lap function
 function recordLap() {
-    const currentLapTime = millisecond + second * 100 + minute * 60 * 100 + hour * 60 * 60 * 100;
+    const currentLapTime = time.millisecond + time.second * 100 + time.minute * 60 * 100 + time.hour * 60 * 60 * 100;
     const lapTime = currentLapTime - prevLapTime;
     prevLapTime = currentLapTime;
 
@@ -104,6 +108,7 @@ function recordLap() {
     lapTable.appendChild(lapRecord);
 }
 
+// Add table header
 function addTableHeader() {
     const headerRow = document.createElement('tr');
     const lapHeader = document.createElement('th');
@@ -118,7 +123,8 @@ function addTableHeader() {
     lapTable.appendChild(headerRow);
 }
 
-function calculateTime(milliseconds){
+// Calculate time function
+function calculateTime(milliseconds) {
     let hours = Math.floor(milliseconds / (100 * 60 * 60));
     milliseconds %= (1000 * 60 * 60);
     let minutes = Math.floor(milliseconds / (100 * 60));
@@ -128,8 +134,17 @@ function calculateTime(milliseconds){
     return formatTime(hours, minutes, seconds, milliseconds);
 }
 
+// Clear lap table
 function clearTable() {
     lapTable.querySelectorAll('tr').forEach(row => row.remove());
     lapCount = 0;
     prevLapTime = 0;
 }
+
+// Event listeners
+startBtn.addEventListener('click', toggleTimer);
+resetBtn.addEventListener('click', resetTimer);
+recordBtn.addEventListener('click', recordLap);
+
+//Initial call
+resetTimer();
