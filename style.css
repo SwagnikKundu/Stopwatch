@@ -36,6 +36,8 @@ body{
 }
 
 
+
+
 /* Timer control styles */
 .timer-control{
     margin: auto;
@@ -45,6 +47,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    
 }
 
 
@@ -54,9 +57,23 @@ body{
     padding: 1.5%;
     border-radius: 5px;
     overflow: hidden;
-    font-weight: bolder;
     cursor: grabbing;
+    font-weight: bolder;
 }
+
+@media screen and (max-width: 600px){
+    .timer-buttons{
+        font: 0.5rem sans-serif;
+    }
+
+    .timer-clock{
+        font: 1rem sans-serif;
+    }
+
+    th,td{
+        font: 0.5rem sans-serif;
+    }
+    
 
 /* Timer button hover styles */
 .timer-buttons:hover{
